@@ -1,12 +1,7 @@
 const mongoose = require('mongoose');
-
 const { User } = require('./user.model');
 
 const customerSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: true
-  },
   addresses: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Address'

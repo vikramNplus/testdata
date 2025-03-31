@@ -5,6 +5,20 @@ const { toJSON, paginate } = require('./plugins');
 
 const userSchema = mongoose.Schema(
   {
+    name: {
+      type: String,
+      required: true,  
+    },
+    email: {
+      type: String,
+      required: true,  
+      unique: true,
+      lowercase: true,
+      validate: {
+        validator: (v) => validator.isEmail(v),
+        message: 'Invalid email address',
+      },
+    },
     phoneNumber: {
       type: String,
       required: true,
@@ -34,8 +48,9 @@ const userSchema = mongoose.Schema(
       default: true,
     },
   },
-  { discriminatorKey: 'role', timestamps: true }
-);
+  {
+    timestamps: true,
+  });
 
 userSchema.plugin(toJSON);
 userSchema.plugin(paginate);
