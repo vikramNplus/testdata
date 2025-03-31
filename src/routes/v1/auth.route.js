@@ -37,10 +37,16 @@ module.exports = router;
  *           schema:
  *             type: object
  *             properties:
+ *               name:
+ *                 type: string
+ *               email:
+ *                 type: string
+ *                 format: email
  *               phoneNumber:
  *                 type: string
  *               password:
  *                 type: string
+ *                 minLength: 8
  *               role:
  *                 type: string
  *                 enum: [customer, vendor, admin]
@@ -48,8 +54,11 @@ module.exports = router;
  *       201:
  *         description: User registered successfully
  *       400:
- *         description: Phone number already in use
+ *         description: Bad request (e.g., phone number or email already in use)
+ *       422:
+ *         description: Validation error
  */
+
 
 /**
  * @swagger
