@@ -41,7 +41,7 @@ app.use(compression());
 
 // Configure CORS
 const corsOptions = {
-  origin: ['http://localhost:3000', 'http://98.85.153.24:7772'], 
+  origin: '*', 
   credentials: true, // Allow credentials (cookies)
   methods: 'GET,POST,PUT,PATCH,DELETE,OPTIONS', // Allowed methods
   allowedHeaders: 'Content-Type,Authorization,clientId',
