@@ -1,7 +1,8 @@
 // src/controllers/product.controller.js
 const httpStatus = require('http-status');
-const productService = require('../services/product.service');
-const ApiError = require('../utils/ApiError');
+const productService = require('../../services/web/product.service');
+const ApiError = require('../../utils/ApiError');
+const catchAsync = require('../../utils/catchAsync');
 
 // Create a new product
 const createProduct = async (req, res) => {
@@ -33,10 +34,16 @@ const deleteProduct = async (req, res) => {
   res.status(httpStatus.NO_CONTENT).send();
 };
 
+const updateProductStatus = catchAsync(async (req, res) => {
+  const product = await productService.updateProductStatus(req.params.productId, req.body.active);
+  res.status(httpStatus.OK).send(product);
+});
+
 module.exports = {
   createProduct,
   getProducts,
   getProductById,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  updateProductStatus
 };

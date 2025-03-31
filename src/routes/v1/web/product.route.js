@@ -1,10 +1,10 @@
 // src/routes/product.route.js
 const express = require('express');
-const validate = require('../../middlewares/validate');
-const productController = require('../../controllers/product.controller');
-const productValidation = require('../../validations/product.validation');
+const validate = require('../../../middlewares/validate');
+const productController = require('../../../controllers/web/product.controller');
+const productValidation = require('../../../validations/web/product.validation');
 
-const auth = require('../../middlewares/auth');
+const auth = require('../../../middlewares/auth');
 
 const router = express.Router();
 
@@ -22,6 +22,7 @@ router.put('/:productId', auth('admin'), validate(productValidation.updateProduc
 
 // Delete a product (admin only)
 router.delete('/:productId', auth('admin'), productController.deleteProduct);
+router.patch('/:productId/status', auth('admin'), validate(productValidation.updateStatus), productController.updateProductStatus);
 
 module.exports = router;
 
@@ -166,4 +167,35 @@ module.exports = router;
  *         - category
  *         - price
  *         - unit
+ */
+/**
+ * @swagger
+ * /products/{productId}/status:
+ *   patch:
+ *     summary: Update a product's active status
+ *     tags: [Product]
+ *     security:
+ *       - bearerAuth: []
+ *     parameters:
+ *       - in: path
+ *         name: productId
+ *         required: true
+ *         description: Product ID
+ *         schema:
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               active:
+ *                 type: boolean
+ *                 example: false
+ *     responses:
+ *       200:
+ *         description: Product status updated
+ *       404:
+ *         description: Product not found
  */

@@ -20,6 +20,10 @@ const productSchema = mongoose.Schema({
   stock: {
     type: Number,
     default: 0
+  },
+  active: {
+    type: Boolean,
+    default: true 
   }
 }, { timestamps: true });
 

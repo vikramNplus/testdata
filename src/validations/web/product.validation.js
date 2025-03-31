@@ -17,7 +17,16 @@ const updateProduct = Joi.object({
   stock: Joi.number().default(0)
 });
 
+const updateStatus = {
+  params: Joi.object().keys({
+    productId: Joi.string().hex().length(24).required(),
+  }),
+  body: Joi.object().keys({
+    active: Joi.boolean().required(),
+  }),
+};
 module.exports = {
   createProduct,
-  updateProduct
+  updateProduct,
+  updateStatus
 };

@@ -1,7 +1,7 @@
 // src/services/product.service.js
 const httpStatus = require('http-status');
-const { Product } = require('../models/product.model');
-const ApiError = require('../utils/ApiError');
+const { Product } = require('../../models/product.model');
+const ApiError = require('../../utils/ApiError');
 
 // Create a new product
 const createProduct = async (productBody) => {
@@ -45,10 +45,20 @@ const deleteProduct = async (productId) => {
   await product.remove();
 };
 
+const updateProductStatus = async (productId, active) => {
+  const product = await Product.findById(productId);
+  if (!product) {
+    throw new ApiError(httpStatus.NOT_FOUND, 'Product not found');
+  }
+  product.active = active;
+  await product.save();
+  return product;
+};
 module.exports = {
   createProduct,
   getProducts,
   getProductById,
   updateProduct,
-  deleteProduct
+  deleteProduct,
+  updateProductStatus
 };
