@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 
 // Register a new user
 const register = async (req, res) => {
-  const { phoneNumber, password, role } = req.body;
+  const { name, email, phoneNumber, password, role } = req.body;
   // Check if the phone number is already taken
   const isPhoneTaken = await User.isPhoneTaken(phoneNumber);
   if (isPhoneTaken) {
@@ -16,8 +16,7 @@ const register = async (req, res) => {
   }
 
   // Create a new user
-  const user = await User.create({ phoneNumber, password, role });
-console.log(user);
+  const user = await User.create({ name, email, phoneNumber, password, role });
   // Create JWT Token (for user session)
   const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, {
     expiresIn: '1d', // Token expires in 1 day
@@ -27,8 +26,10 @@ console.log(user);
     message: 'User registered successfully!',
     user: {
       id: user._id,
+      name: user.name,
+      email: user.email,
       phoneNumber: user.phoneNumber,
-      role: user.role,
+      role: user.role
     },
     token,
   });
