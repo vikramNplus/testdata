@@ -1,39 +1,59 @@
 const Joi = require('joi');
 
-const updateProfile = Joi.object({
-  name: Joi.string().min(3).max(30),
-  profilePic: Joi.string().uri(),
-});
+const updateProfile = {
+  body: Joi.object().keys({
+    name: Joi.string().trim().min(3).max(30),
+    profilePic: Joi.string().trim().uri().optional(),
+  }),
+};
 
-const addAddress = Joi.object({
-  street: Joi.string().required(),
-  city: Joi.string().required(),
-  pincode: Joi.string().pattern(/^\d{6}$/).required(),
-  isDefault: Joi.boolean(),
-});
+const addAddress = {
+  body: Joi.object().keys({
+    street: Joi.string().trim().required(),
+    city: Joi.string().trim().required(),
+    pincode: Joi.string().trim().pattern(/^\d{5,6}$/).required().messages({
+      "string.pattern.base": "Pincode must be 5 or 6 digits",
+    }),
+    isDefault: Joi.boolean().default(false),
+  }),
+};
 
-const addToCart = Joi.object({
-  productId: Joi.string().hex().length(24).required(),
-  quantity: Joi.number().integer().min(1).required(),
-});
+const addToCart = {
+  body: Joi.object().keys({
+    productId: Joi.string().trim().hex().length(24).required(),
+    quantity: Joi.number().integer().min(1).required(),
+  }),
+};
 
-const placeOrder = Joi.object({
-  addressId: Joi.string().hex().length(24).required(),
-  items: Joi.array().items(
-    Joi.object({
-      productId: Joi.string().hex().length(24).required(),
-      quantity: Joi.number().integer().min(1).required(),
-    })
-  ).min(1).required(),
-});
+const placeOrder = {
+  body: Joi.object().keys({
+    addressId: Joi.string().trim().hex().length(24).required(),
+    items: Joi.array()
+      .items(
+        Joi.object().keys({
+          productId: Joi.string().trim().hex().length(24).required(),
+          quantity: Joi.number().integer().min(1).required(),
+        })
+      )
+      .min(1)
+      .required()
+      .messages({
+        "array.min": "Order must contain at least one item",
+      }),
+  }),
+};
 
-const cancelOrder = Joi.object({
-  orderId: Joi.string().hex().length(24).required(),
-});
+const cancelOrder = {
+  params: Joi.object().keys({
+    orderId: Joi.string().trim().hex().length(24).required(),
+  }),
+};
 
-const deleteAddress = Joi.object({
-  addressId: Joi.string().hex().length(24).required(),
-});
+const deleteAddress = {
+  params: Joi.object().keys({
+    addressId: Joi.string().trim().hex().length(24).required(),
+  }),
+};
 
 module.exports = {
   updateProfile,

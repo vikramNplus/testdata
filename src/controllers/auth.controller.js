@@ -19,10 +19,11 @@ const register = async (req, res) => {
   // Create a new user
   const user = await User.create({ name, email, phoneNumber, password, role });
   // Create JWT Token (for user session)
-  const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: '1d', // Token expires in 1 day
-  });
-
+  const token = jwt.sign(
+    { sub: user._id, type: tokenTypes.ACCESS }, // Correct payload
+    process.env.JWT_SECRET,  // Make sure this is the same secret as in passport.js
+    { expiresIn: '1d' }
+  );
   res.status(httpStatus.CREATED).send({
     message: 'User registered successfully!',
     user: {

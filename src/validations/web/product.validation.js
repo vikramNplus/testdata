@@ -1,32 +1,31 @@
-// src/validations/web/product.validation.js
 const Joi = require('joi');
-
-
 
 const createProduct = {
   body: Joi.object().keys({
-    name: Joi.string().required(),
+    name: Joi.string().trim().required(),
     category: Joi.string().valid('vegetable', 'fruit', 'dairy').required(),
-    price: Joi.number().required(),
+    price: Joi.number().positive().required(),
     unit: Joi.string().valid('kg', 'dozen', 'piece').required(),
-    stock: Joi.number().default(0),
-    image: Joi.string().required(), 
+    stock: Joi.number().integer().min(0).default(0),
   }),
 };
+
 const updateProduct = {
+  params: Joi.object().keys({
+    productId: Joi.string().hex().length(24).required(),
+  }),
   body: Joi.object().keys({
-    name: Joi.string(),
-    category: Joi.string().valid('vegetable', 'fruit', 'dairy'),
-    price: Joi.number(),
-    unit: Joi.string().valid('kg', 'dozen', 'piece'),
-    stock: Joi.number().default(0),
-    image: Joi.string().required(), 
+    name: Joi.string().trim().optional(),
+    category: Joi.string().valid('vegetable', 'fruit', 'dairy').optional(),
+    price: Joi.number().positive().optional(),
+    unit: Joi.string().valid('kg', 'dozen', 'piece').optional(),
+    stock: Joi.number().integer().min(0).optional(),
   }),
 };
 
 const updateStatus = {
   params: Joi.object().keys({
-    productId: Joi.string().hex().length(24).required(), // Ensure productId is a valid MongoDB ObjectId
+    productId: Joi.string().hex().length(24).required(),
   }),
   body: Joi.object().keys({
     active: Joi.boolean().required(),
