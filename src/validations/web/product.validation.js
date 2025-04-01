@@ -7,6 +7,8 @@ const createProduct = {
     price: Joi.number().positive().required(),
     unit: Joi.string().valid('kg', 'dozen', 'piece').required(),
     stock: Joi.number().integer().min(0).default(0),
+    image: Joi.string().optional(),
+    
   }),
 };
 
@@ -20,6 +22,8 @@ const updateProduct = {
     price: Joi.number().positive().optional(),
     unit: Joi.string().valid('kg', 'dozen', 'piece').optional(),
     stock: Joi.number().integer().min(0).optional(),
+    image: Joi.string().optional(),
+    
   }),
 };
 
