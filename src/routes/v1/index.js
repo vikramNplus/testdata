@@ -28,10 +28,10 @@ const defaultRoutes = [
     path: '/user',
     route: userRoute,
   },
-  {
-    path: '/customer',
-    route: customerRoute,
-  },
+  // {
+  //   path: '/customer',
+  //   route: customerRoute,
+  // },
   {
     path: '/orders',
     route: orderRoute,
@@ -41,7 +41,7 @@ const defaultRoutes = [
     route: productRoute,
   },
   {
-    path: 'customers',
+    path: '/customers',
     route: webCustomerRoute,
   },
   {

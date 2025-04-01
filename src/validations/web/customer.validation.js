@@ -6,6 +6,8 @@ const createCustomer = {
     name: Joi.string().required(),
     phoneNumber: Joi.string().required().pattern(/^\d+$/).min(10).max(15),
     password: Joi.string().min(8).required(),
+    email: Joi.string().email().required(),
+
   }),
 };
 
@@ -23,6 +25,8 @@ const updateCustomer = {
     name: Joi.string(),
     phoneNumber: Joi.string().pattern(/^\d+$/).min(10).max(15),
     password: Joi.string().min(8),
+    email: Joi.string().email(),
+
   }),
 };
 
