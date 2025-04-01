@@ -1,5 +1,4 @@
 const allRoles = {
-  user: ['getUsers', 'manageUsers', 'Role', 'Permissions', 'Privillege', 'Users', 'Language', 'Country', 'Version', 'Setting', 'Translation', 'Vehicle', 'VehicleModels', 'Category', 'GroupDocument', 'Document', 'Admin', 'Company', 'Driver', 'Dispatcher', 'SubScription', 'Client', 'Intro', 'Zone', 'ZonePrice', 'ZoneSurgePrice', 'DriverDocument', 'PromoCode', 'Request', 'CancellationReason', 'MobileUser', 'Sos', 'Complaint', 'Wallet', 'OutOfZone', 'InvoiceQuestions', 'SendNotifications', 'Referral', 'CompanySubScription', 'Faq', 'UserComplaint', 'Rental', 'Rating', 'Favourite','Goods'],
   admin: ['getUsers','admin','Users','customer'],
 };
 

@@ -1,14 +1,13 @@
 // src/routes/product.route.js
 const express = require('express');
 const validate = require('../../../middlewares/validate');
-const productController = require('../../../controllers/web/product.controller');
 const productValidation = require('../../../validations/web/product.validation');
+const productController = require('../../../controllers/web/product.controller');
 
 const auth = require('../../../middlewares/auth');
 
 const router = express.Router();
 
-// Create a new product (admin only)
 router.post('/', auth('admin'), validate(productValidation.createProduct), productController.createProduct);
 
 // Get all products

@@ -5,6 +5,7 @@ const otpService = require('../services/otp.service');
 const bcrypt = require('bcryptjs');
 const ApiError = require('../utils/ApiError');
 const jwt = require('jsonwebtoken');
+const { tokenTypes } = require('../config/tokens');
 
 // Register a new user
 const register = async (req, res) => {
@@ -46,9 +47,11 @@ const login = async (req, res) => {
   }
 
   // Create JWT Token (for user session)
-  const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, {
-    expiresIn: '1d', // Token expires in 1 day
-  });
+  const token = jwt.sign(
+    { sub: user._id, type: tokenTypes.ACCESS }, // Correct payload
+    process.env.JWT_SECRET,  // Make sure this is the same secret as in passport.js
+    { expiresIn: '1d' }
+  );
 
   res.status(httpStatus.OK).send({
     message: 'Login successful',

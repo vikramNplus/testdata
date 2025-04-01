@@ -24,7 +24,11 @@ const productSchema = mongoose.Schema({
   active: {
     type: Boolean,
     default: true 
-  }
+  },
+  image: {
+    type: String,
+    required: true
+},
 }, { timestamps: true });
 
 productSchema.plugin(toJSON);
