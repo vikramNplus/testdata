@@ -3,11 +3,18 @@ const validate = require('../../../middlewares/validate');
 const auth = require('../../../middlewares/auth');
 const categoryController = require('../../../controllers/web/category.controller');
 const categoryValidation = require('../../../validations/web/category.validation');
+const upload = require('../../../middlewares/upload'); // Import multer middleware
 
 const router = express.Router();
 
 // Create a new category (admin only)
-router.post('/', auth('admin'), validate(categoryValidation.createCategory), categoryController.createCategory);
+router.post(
+    '/',
+    auth('admin'),
+    upload.single('image'), // Handle single file upload
+    validate(categoryValidation.createCategory),
+    categoryController.createCategory
+  );
 
 // Get all categories
 router.get('/', categoryController.getCategories);

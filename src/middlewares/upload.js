@@ -1,202 +1,29 @@
 const multer = require('multer');
 const path = require('path');
-const crypto = require('crypto');
-const fs = require('fs');
 
-
-
-// Configure storage for multer
+// Configure multer storage
 const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../uploads/categoryImage/')); // Set upload directory
+  destination: function (req, file, cb) {
+    cb(null, 'uploads/'); // Save files inside 'uploads' folder
   },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    cb(null, `${uniqueSuffix}${ext}`); // Save file with unique name
-  }
+  filename: function (req, file, cb) {
+    cb(null, `${Date.now()}-${file.originalname}`);
+  },
 });
 
+// File filter to accept only images
+const fileFilter = (req, file, cb) => {
+  const allowedTypes = /jpeg|jpg|png/;
+  const extName = allowedTypes.test(path.extname(file.originalname).toLowerCase());
+  const mimeType = allowedTypes.test(file.mimetype);
 
-// Configure storage for multer
-const userStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../uploads/user/')); // Set upload directory
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    cb(null, `${uniqueSuffix}${ext}`); // Save file with unique name
+  if (extName && mimeType) {
+    return cb(null, true);
+  } else {
+    cb(new Error('Only images (JPG, JPEG, PNG) are allowed!'));
   }
-});
+};
 
-// Configure storage for multer
-const imageStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../uploads/intro/'));
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    cb(null, `${uniqueSuffix}${ext}`);
-  }
-});
+const upload = multer({ storage, fileFilter });
 
-// Configure storage for multer
-const vehiclestorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../uploads/vehicles/'));
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null, filename);
-  }
-});
-
-const vehicleModelstorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, '../../uploads/vehicleModels/'));
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null, filename); // Save file with unique name
-  }
-});
-
-
-const driverdocumentModelstorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, '../../uploads/documentImage/'));
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null, filename); // Save file with unique name
-  }
-});
-
-
-const settingstorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, path.join(__dirname, '../../uploads/setting/'));
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null, filename);
-  }
-});
-
-
-const promoModelstorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, '../../uploads/promo/'));
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null, filename); // Save file with unique name
-  }
-});
-
-
-const dispatcherModelstorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, '../../uploads/dispatcher/'));
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null, filename); // Save file with unique name
-  }
-});
-
-const pushNotificationstorage = multer.diskStorage({
-
-  destination: (req, file, cb) => {
-      cb(null, path.join(__dirname, '../../uploads/pushnotification/'));
-  },
-  filename: (req, file, cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null, filename); // Save file with unique name
-  }
-});
-
-const goodsModelStorage = multer.diskStorage({
-  destination: (req,file,cb) => {
-    cb(null,path.join(__dirname,"../../uploads/goods/"));
-  },
-  filename: (req,file,cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null,filename);
-  }
-});
-
-const 
-requestModelStorage = multer.diskStorage({
-  destination: (req,file,cb) => {
-    cb(null,path.join(__dirname,"../../uploads/requestImage/"));
-  },
-  filename: (req,file,cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null,filename);
-  }
-});
-
-
-
-const requestKitStorage = multer.diskStorage({
-  destination: (req,file,cb) => {
-    cb(null,path.join(__dirname,"../../uploads/kitImage/"));
-  },
-  filename: (req,file,cb) => {
-    const uniqueSuffix = crypto.randomBytes(16).toString('hex');
-    const ext = path.extname(file.originalname);
-    const filename = `${uniqueSuffix}${ext}`;
-    cb(null,filename);
-  }
-});
-
-const upload = multer({ storage });
-
-const userUpload = multer({ storage : userStorage });
-
-const vehicleUpload = multer({ storage : vehiclestorage});
-
-const vehicleModelUpload = multer({ storage : vehicleModelstorage });
-
-const imageModelUpload = multer({ storage : imageStorage });
-
-const documentModelUpload = multer({ storage : driverdocumentModelstorage });
-
-const settingUpload = multer({ storage : settingstorage});
-
-const promoUpload = multer({ storage : promoModelstorage});
-
-const dispatcherUpload = multer({ storage : dispatcherModelstorage});
-
-
-const pushNotificationUpload = multer({ storage : pushNotificationstorage});
-
-const goodsUpload = multer({ storage : goodsModelStorage});
-
-const requestUpload = multer({ storage: requestModelStorage});
-
-const kitUpload = multer({ storage: requestKitStorage});
-
-
-module.exports = {upload,userUpload,vehicleUpload,vehicleModelUpload,imageModelUpload,documentModelUpload,settingUpload,promoUpload,dispatcherUpload,pushNotificationUpload,goodsUpload,requestUpload,kitUpload};
+module.exports = upload;

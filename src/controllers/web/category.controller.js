@@ -3,7 +3,12 @@ const catchAsync = require('../../utils/catchAsync');
 const categoryService = require('../../services/web/category.service');
 
 const createCategory = catchAsync(async (req, res) => {
-  const category = await categoryService.createCategory(req.body);
+  const categoryData = {
+    name: req.body.name,
+    image: req.file ? `/uploads/${req.file.filename}` : null, // Store image path
+    isActive: req.body.isActive ?? true,
+  };
+  const category = await categoryService.createCategory(categoryData);
   res.status(httpStatus.CREATED).send(category);
 });
 

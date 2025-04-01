@@ -3,12 +3,20 @@ const express = require('express');
 const validate = require('../../../middlewares/validate');
 const productValidation = require('../../../validations/web/product.validation');
 const productController = require('../../../controllers/web/product.controller');
+const upload = require('../../../middlewares/upload'); // Import multer middleware
 
 const auth = require('../../../middlewares/auth');
 
 const router = express.Router();
 
-router.post('/', auth('admin'), validate(productValidation.createProduct), productController.createProduct);
+
+router.post(
+    '/',
+    auth('admin'),
+    upload.single('image'), // Handle single file upload
+    validate(productValidation.createProduct),
+    productController.createProduct
+  );
 
 // Get all products
 router.get('/', productController.getProducts);

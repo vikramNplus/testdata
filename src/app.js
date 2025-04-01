@@ -56,20 +56,11 @@ passport.use('jwt', jwtStrategy);
 if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }
+app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve images
 
 // Static file serving for uploads
 app.use('/uploads/categoryImage', express.static(path.join(__dirname, '..', 'uploads/categoryImage')));
-app.use('/uploads/vehicles', express.static(path.join(__dirname, '..', 'uploads/vehicles')));
-app.use('/uploads/vehicleModels', express.static(path.join(__dirname, '..', 'uploads/vehicleModels')));
-app.use('/uploads/user', express.static(path.join(__dirname, '..', 'uploads/user')));
-app.use('/uploads/intro', express.static(path.join(__dirname, '..', 'uploads/intro')));
-app.use('/uploads/documentImage', express.static(path.join(__dirname, '..', 'uploads/documentImage')));
-app.use('/uploads/setting', express.static(path.join(__dirname, '..', 'uploads/setting')));
-app.use('/uploads/promo', express.static(path.join(__dirname, '..', 'uploads/promo')));
-app.use('/uploads/dispatcher', express.static(path.join(__dirname, '..', 'uploads/dispatcher')));
-app.use('/uploads/goods', express.static(path.join(__dirname, '..', 'uploads/goods')));
-app.use('/uploads/requestImage',express.static(path.join(__dirname,'..','uploads/requestImage')));
-app.use('/uploads/kitImage',express.static(path.join(__dirname,'..','uploads/kitImage')));
+
 
 // API routes
 app.use('/v1', routes);
