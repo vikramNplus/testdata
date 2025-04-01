@@ -1,22 +1,28 @@
 // src/validations/web/product.validation.js
 const Joi = require('joi');
 
-const createProduct = Joi.object({
-  name: Joi.string().required(),
-  category: Joi.string().valid('vegetable', 'fruit', 'dairy').required(),
-  price: Joi.number().required(),
-  // unit: Joi.string().valid('kg', 'dozen', 'piece').required(),
-  // stock: Joi.number().default(0),
-  image: Joi.string().required(), 
-});
 
-const updateProduct = Joi.object({
-  name: Joi.string(),
-  category: Joi.string().valid('vegetable', 'fruit', 'dairy'),
-  price: Joi.number(),
-  unit: Joi.string().valid('kg', 'dozen', 'piece'),
-  stock: Joi.number().default(0),
-});
+
+const createProduct = {
+  body: Joi.object().keys({
+    name: Joi.string().required(),
+    category: Joi.string().valid('vegetable', 'fruit', 'dairy').required(),
+    price: Joi.number().required(),
+    unit: Joi.string().valid('kg', 'dozen', 'piece').required(),
+    stock: Joi.number().default(0),
+    image: Joi.string().required(), 
+  }),
+};
+const updateProduct = {
+  body: Joi.object().keys({
+    name: Joi.string(),
+    category: Joi.string().valid('vegetable', 'fruit', 'dairy'),
+    price: Joi.number(),
+    unit: Joi.string().valid('kg', 'dozen', 'piece'),
+    stock: Joi.number().default(0),
+    image: Joi.string().required(), 
+  }),
+};
 
 const updateStatus = {
   params: Joi.object().keys({
