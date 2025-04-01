@@ -39,4 +39,4 @@ orderSchema.plugin(toJSON);
 orderSchema.plugin(paginate);
 
 const Order = mongoose.model('Order', orderSchema);
-module.exports = Order;
+module.exports = {Order};
