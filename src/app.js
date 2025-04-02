@@ -56,11 +56,11 @@ passport.use('jwt', jwtStrategy);
 if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }
-app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 
 // API routes
 app.use('/v1', routes);
+app.use('/uploads', express.static(path.resolve('uploads')));
 
 // Start the server on port 3000
 app.listen(3000, () => console.log('Server running on http://localhost:3000'));
