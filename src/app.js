@@ -56,10 +56,7 @@ passport.use('jwt', jwtStrategy);
 if (config.env === 'production') {
   app.use('/v1/auth', authLimiter);
 }
-app.use('/uploads', express.static(path.join(__dirname, 'uploads'))); // Serve images
-
-// Static file serving for uploads
-app.use('/uploads/categoryImage', express.static(path.join(__dirname, '..', 'uploads/categoryImage')));
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 
 // API routes

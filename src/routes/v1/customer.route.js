@@ -14,10 +14,8 @@ router.post('/addresses', auth('customer'), validate(customerValidation.addAddre
 router.get('/addresses', auth('customer'), customerController.getAddresses);
 router.delete('/addresses/:addressId', auth('customer'), validate(customerValidation.deleteAddress), customerController.deleteAddress);
 
-// Product browsing
 router.get('/products', auth('customer'), customerController.getProducts);
 
-// Cart management
 router.post('/cart', auth('customer'), validate(customerValidation.addToCart), customerController.addToCart);
 router.get('/cart', auth('customer'), customerController.getCart); // Get cart items
 router.delete('/cart/:cartItemId', auth('customer'), customerController.removeFromCart); // Remove from cart
