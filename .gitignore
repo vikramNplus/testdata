@@ -12,5 +12,7 @@ yarn-error.log
 coverage
 
 
+tests.zip
+
 bin
 .husky
