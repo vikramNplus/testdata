@@ -12,7 +12,7 @@ const createProduct = async (productBody) => {
 // Get all products with pagination and filtering
 const getProducts = async (filter) => {
   const products = await Product.paginate(filter, {
-    limit: 10, // Can be set from query params for flexibility
+    limit: 10, 
     page: filter.page || 1,
   });
   return products;

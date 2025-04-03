@@ -11,6 +11,7 @@ const createProduct = async (req, res) => {
     category: req.body.category,
     price: req.body.price,
     unit: req.body.unit,
+    description :req.body.description,
     stock: req.body.stock || 0,
     image: req.file ? `/uploads/${req.file.filename}` : null, // Store uploaded image path
     isActive: req.body.isActive ?? true,

@@ -32,7 +32,6 @@ router.delete('/:productId', auth('admin'), productController.deleteProduct);
 router.patch('/:productId/status', auth('admin'), validate(productValidation.updateStatus), productController.updateProductStatus);
 
 module.exports = router;
-
 /**
  * @swagger
  * tags:
@@ -51,12 +50,36 @@ module.exports = router;
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/Product'
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: "Apple"
+ *               category:
+ *                 type: string
+ *                 example: "Fruits"
+ *               price:
+ *                 type: number
+ *                 example: 2.99
+ *               unit:
+ *                 type: string
+ *                 enum: [kg, dozen, piece]
+ *                 example: "kg"
+ *               stock:
+ *                 type: number
+ *                 example: 100
+ *               image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       201:
- *         description: Product created
+ *         description: Product created successfully
+ *       400:
+ *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  */
 
 /**
@@ -67,13 +90,7 @@ module.exports = router;
  *     tags: [Product]
  *     responses:
  *       200:
- *         description: List of products
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Product'
+ *         description: Successfully retrieved products
  */
 
 /**
@@ -83,36 +100,25 @@ module.exports = router;
  *     summary: Get a product by ID
  *     tags: [Product]
  *     parameters:
- *       - in: path
- *         name: productId
+ *       - name: productId
+ *         in: path
  *         required: true
- *         description: Product ID
  *         schema:
  *           type: string
  *     responses:
  *       200:
- *         description: Product details
- *         content:
- *           application/json:
- *             schema:
- *               $ref: '#/components/schemas/Product'
+ *         description: Successfully retrieved the product
  *       404:
  *         description: Product not found
- */
-
-/**
- * @swagger
- * /products/{productId}:
  *   put:
- *     summary: Update a product by ID
+ *     summary: Update a product
  *     tags: [Product]
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: productId
+ *       - name: productId
+ *         in: path
  *         required: true
- *         description: Product ID
  *         schema:
  *           type: string
  *     requestBody:
@@ -120,74 +126,58 @@ module.exports = router;
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/Product'
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *               category:
+ *                 type: string
+ *               price:
+ *                 type: number
+ *               unit:
+ *                 type: string
+ *                 enum: [kg, dozen, piece]
+ *               stock:
+ *                 type: number
+ *               image:
+ *                 type: string
  *     responses:
  *       200:
- *         description: Product updated
+ *         description: Product updated successfully
+ *       400:
+ *         description: Bad request
  *       404:
  *         description: Product not found
- */
-
-/**
- * @swagger
- * /products/{productId}:
  *   delete:
- *     summary: Delete a product by ID
+ *     summary: Delete a product
  *     tags: [Product]
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: productId
+ *       - name: productId
+ *         in: path
  *         required: true
- *         description: Product ID
  *         schema:
  *           type: string
  *     responses:
  *       204:
- *         description: Product deleted
+ *         description: Product deleted successfully
  *       404:
  *         description: Product not found
  */
 
 /**
  * @swagger
- * components:
- *   schemas:
- *     Product:
- *       type: object
- *       properties:
- *         name:
- *           type: string
- *         category:
- *           type: string
- *           enum: [vegetable, fruit, dairy]
- *         price:
- *           type: number
- *         unit:
- *           type: string
- *           enum: [kg, dozen, piece]
- *         stock:
- *           type: integer
- *       required:
- *         - name
- *         - category
- *         - price
- *         - unit
- */
-/**
- * @swagger
  * /products/{productId}/status:
  *   patch:
- *     summary: Update a product's active status
+ *     summary: Update product status (Active/Inactive)
  *     tags: [Product]
  *     security:
  *       - bearerAuth: []
  *     parameters:
- *       - in: path
- *         name: productId
+ *       - name: productId
+ *         in: path
  *         required: true
- *         description: Product ID
  *         schema:
  *           type: string
  *     requestBody:
@@ -199,10 +189,10 @@ module.exports = router;
  *             properties:
  *               active:
  *                 type: boolean
- *                 example: false
+ *                 example: true
  *     responses:
  *       200:
- *         description: Product status updated
+ *         description: Product status updated successfully
  *       404:
  *         description: Product not found
  */

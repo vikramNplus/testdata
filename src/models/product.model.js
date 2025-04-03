@@ -9,7 +9,6 @@ const productSchema = mongoose.Schema({
   },
   category: {
     type: String,
-    enum: ['vegetable', 'fruit', 'dairy'],
     required: true
   },
   price: Number,
@@ -24,6 +23,10 @@ const productSchema = mongoose.Schema({
   active: {
     type: Boolean,
     default: true 
+  },
+  description: {
+    type: String,
+    required: false
   },
   image: {
     type: String,

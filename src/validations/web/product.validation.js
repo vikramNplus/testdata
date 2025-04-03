@@ -3,11 +3,12 @@ const Joi = require('joi');
 const createProduct = {
   body: Joi.object().keys({
     name: Joi.string().trim().required(),
-    category: Joi.string().valid('vegetable', 'fruit', 'dairy').required(),
+    category: Joi.string().required(),
     price: Joi.number().positive().required(),
     unit: Joi.string().valid('kg', 'dozen', 'piece').required(),
     stock: Joi.number().integer().min(0).default(0),
     image: Joi.string().optional(),
+    description :Joi.string().optional(),
     
   }),
 };
@@ -23,7 +24,8 @@ const updateProduct = {
     unit: Joi.string().valid('kg', 'dozen', 'piece').optional(),
     stock: Joi.number().integer().min(0).optional(),
     image: Joi.string().optional(),
-    
+    description :Joi.string().optional(),
+
   }),
 };
 

@@ -1,0 +1,53 @@
+const httpStatus = require('http-status');
+const catchAsync = require('../../utils/catchAsync');
+const { subcategoryService } = require('../../services');
+
+const createSubcategory = catchAsync(async (req, res) => {
+    const subcategoryData = req.body;
+        if (req.file) {
+      subcategoryData.image = `/uploads/${req.file.filename}`;
+    }
+    const subcategory = await subcategoryService.createSubcategory(subcategoryData);
+    res.status(httpStatus.CREATED).send(subcategory);
+  });
+  
+
+const getSubcategory = catchAsync(async (req, res) => {
+  const subcategory = await subcategoryService.getSubcategoryById(req.params.subcategoryId);
+  if (!subcategory) {
+    return res.status(httpStatus.NOT_FOUND).send({ message: 'Subcategory not found' });
+  }
+  res.send(subcategory);
+});
+
+const getAllSubcategories = catchAsync(async (req, res) => {
+  const subcategories = await subcategoryService.getAllSubcategories();
+  res.send(subcategories);
+});
+
+const updateSubcategory = catchAsync(async (req, res) => {
+  const subcategory = await subcategoryService.updateSubcategory(req.params.subcategoryId, req.body);
+  res.send(subcategory);
+});
+
+const deleteSubcategory = catchAsync(async (req, res) => {
+  await subcategoryService.deleteSubcategory(req.params.subcategoryId);
+  res.status(httpStatus.NO_CONTENT).send();
+});
+const updateSubcategoryStatus = catchAsync(async (req, res) => {
+    const { subcategoryId } = req.params;
+    const { isActive } = req.body;
+  
+    const updatedSubcategory = await subcategoryService.updateSubcategoryStatus(subcategoryId, isActive);
+    res.status(httpStatus.OK).send(updatedSubcategory);
+  });
+  
+
+module.exports = {
+  createSubcategory,
+  getSubcategory,
+  getAllSubcategories,
+  updateSubcategory,
+  deleteSubcategory,
+  updateSubcategoryStatus,
+};
