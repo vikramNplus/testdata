@@ -42,7 +42,7 @@ const updateProduct = async (productId, updateBody) => {
 // Delete a product by ID
 const deleteProduct = async (productId) => {
   const product = await getProductById(productId);
-  await product.remove();
+  await product.deleteOne();
 };
 
 const updateProductStatus = async (productId, active) => {
