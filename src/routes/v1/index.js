@@ -30,10 +30,10 @@ const defaultRoutes = [
     path: '/user',
     route: userRoute,
   },
-  // {
-  //   path: '/customer',
-  //   route: customerRoute,
-  // },
+  {
+    path: '/customer',
+    route: customerRoute,
+  },
   {
     path: '/orders',
     route: orderRoute,
