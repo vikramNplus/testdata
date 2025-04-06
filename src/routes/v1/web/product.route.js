@@ -25,7 +25,7 @@ router.get('/', productController.getProducts);
 router.get('/:productId', productController.getProductById);
 
 // Update a product (admin only)
-router.put('/:productId', auth('admin'), validate(productValidation.updateProduct), productController.updateProduct);
+router.put('/:productId', auth('admin'),upload.single('image'), validate(productValidation.updateProduct), productController.updateProduct);
 
 // Delete a product (admin only)
 router.delete('/:productId', auth('admin'), productController.deleteProduct);

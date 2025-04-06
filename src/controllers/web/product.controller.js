@@ -35,6 +35,9 @@ const getProductById = async (req, res) => {
 
 // Update a product by ID
 const updateProduct = async (req, res) => {
+  if (req.file) {
+    req.body.image = `/uploads/${req.file.filename}`; 
+  }
   const product = await productService.updateProduct(req.params.productId, req.body);
   res.send(product);
 };
