@@ -23,7 +23,7 @@ router.get('/', categoryController.getCategories);
 router.get('/:categoryId', validate(categoryValidation.getCategory), categoryController.getCategoryById);
 
 // Update a category (admin only)
-router.put('/:categoryId', auth('admin'), validate(categoryValidation.updateCategory), categoryController.updateCategory);
+router.put('/:categoryId', auth('admin'), upload.single('image'), validate(categoryValidation.updateCategory), categoryController.updateCategory);
 
 // Delete a category (admin only)
 router.delete('/:categoryId', auth('admin'), validate(categoryValidation.deleteCategory), categoryController.deleteCategory);

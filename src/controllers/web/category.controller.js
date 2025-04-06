@@ -23,6 +23,9 @@ const getCategoryById = catchAsync(async (req, res) => {
 });
 
 const updateCategory = catchAsync(async (req, res) => {
+  if (req.file) {
+    req.body.image = `/uploads/${req.file.filename}`; 
+  }
   const category = await categoryService.updateCategory(req.params.categoryId, req.body);
   res.status(httpStatus.OK).send(category);
 });

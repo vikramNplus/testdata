@@ -26,6 +26,9 @@ const getAllSubcategories = catchAsync(async (req, res) => {
 });
 
 const updateSubcategory = catchAsync(async (req, res) => {
+  if (req.file) {
+    req.body.image = `/uploads/${req.file.filename}`; 
+  }
   const subcategory = await subcategoryService.updateSubcategory(req.params.subcategoryId, req.body);
   res.send(subcategory);
 });
