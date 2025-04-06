@@ -1,4 +1,4 @@
-const Subcategory = require('../../models');
+const Subcategory = require('../../models/subcategory.model');
 const ApiError = require('../../utils/ApiError');
 const httpStatus = require('http-status');
 

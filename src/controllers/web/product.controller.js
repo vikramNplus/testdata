@@ -9,6 +9,7 @@ const createProduct = async (req, res) => {
   const productData = {
     name: req.body.name,
     category: req.body.category,
+    subcategory: req.body.subcategory,
     price: req.body.price,
     unit: req.body.unit,
     description :req.body.description,

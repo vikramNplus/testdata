@@ -60,6 +60,9 @@ module.exports = router;
  *               category:
  *                 type: string
  *                 example: "Fruits"
+ *               subcategory:  # Fixed "Subcategory" key (lowercase 's')
+ *                 type: string
+ *                 example: "Citrus"
  *               price:
  *                 type: number
  *                 example: 2.99
@@ -131,6 +134,8 @@ module.exports = router;
  *               name:
  *                 type: string
  *               category:
+ *                 type: string
+ *               subcategory:  # Fixed "Subcategory" key (lowercase 's')
  *                 type: string
  *               price:
  *                 type: number

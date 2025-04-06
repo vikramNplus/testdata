@@ -47,6 +47,18 @@ const userSchema = mongoose.Schema(
       type: Boolean,
       default: true,
     },
+    address: { 
+      type: String, 
+      required: false 
+    },  
+    latitude: { 
+      type: Number, 
+      required: false 
+    },  
+    longitude: { 
+      type: Number, 
+      required: false 
+    },
   },
   {
     timestamps: true,
