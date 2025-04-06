@@ -26,6 +26,7 @@ const updateCategory = async (categoryId, updateBody) => {
   if (!category) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Category not found');
   }
+
   if (updateBody.name && (await Category.findOne({ name: updateBody.name, _id: { $ne: categoryId } }))) {
     throw new ApiError(httpStatus.BAD_REQUEST, 'Category name already exists');
   }
