@@ -10,7 +10,7 @@ const swaggerDef = {
   },
   servers: [
     {
-      url: `http://localhost:${config.port}/v1`,
+      url: `https://testdata-x7qx.onrender.com/v1`,
     },
   ],
 };
