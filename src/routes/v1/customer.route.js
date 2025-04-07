@@ -180,23 +180,48 @@ module.exports = router;
  * @swagger
  * /customer/cart:
  *   post:
- *     summary: Add item to cart
+ *     summary: Add an item to the customer's cart
  *     tags: [Customer]
  *     security:
- *       - bearerAuth: []
+ *       - bearerAuth: []  # Using bearer authentication (JWT)
  *     requestBody:
  *       required: true
  *       content:
  *         application/json:
  *           schema:
- *             $ref: '#/components/schemas/CartItem'
+ *             $ref: '#/components/schemas/CartItem'  # Referring to CartItem schema
  *     responses:
- *       200:
- *         description: Item added to cart
+ *       201:
+ *         description: Item successfully added to cart
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/CartItem'  # Returning the cart item object
  *       400:
- *         description: Invalid input
+ *         description: Invalid input, such as missing or invalid product ID or quantity
  *       401:
- *         description: Unauthorized
+ *         description: Unauthorized, invalid or missing authentication token
+ *       404:
+ *         description: Product not found
+ *       500:
+ *         description: Internal server error
+ * 
+ * components:
+ *   schemas:
+ *     CartItem:
+ *       type: object
+ *       properties:
+ *         productId:
+ *           type: string
+ *           description: ID of the product to add to the cart
+ *           example: "60d2c45f6b2a07335e27c05c"
+ *         quantity:
+ *           type: integer
+ *           description: Quantity of the product to be added to the cart
+ *           example: 2
+ *       required:
+ *         - productId
+ *         - quantity
  */
 
 /**

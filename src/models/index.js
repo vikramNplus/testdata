@@ -12,6 +12,7 @@ module.exports = {
     Address: require('./address.model'),
     Warehouse: require('./warehouse.model'),
     Feedback: require('./feedback.model'),
+    Cart: require('./cart.model'),
     Subcategory: require('./subcategory.model'),
 
   };

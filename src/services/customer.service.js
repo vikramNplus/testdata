@@ -41,15 +41,19 @@ const getAvailableProducts = async (category) => {
   const query = category ? { category } : {};
   return Product.find(query);
 };
-
 const addToCart = async (customerId, cartItem) => {
   const existingItem = await Cart.findOne({ customer: customerId, product: cartItem.productId });
+
   if (existingItem) {
     existingItem.quantity += cartItem.quantity;
     await existingItem.save();
     return existingItem;
   }
-  const newItem = new Cart({ ...cartItem, customer: customerId });
+  const newItem = new Cart({
+    ...cartItem,
+    customer: customerId,
+  });
+
   await newItem.save();
   return newItem;
 };
