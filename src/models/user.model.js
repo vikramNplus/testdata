@@ -54,6 +54,10 @@ const userSchema = mongoose.Schema(
     latitude: { 
       type: Number, 
       required: false 
+    },
+    isVeg :{
+      type: Boolean,
+      default: false,
     },  
     longitude: { 
       type: Number, 

@@ -13,7 +13,7 @@ const router = express.Router();
 router.post(
     '/',
     auth('admin'),
-    upload.single('image'), // Handle single file upload
+    upload.single('image'), 
     validate(productValidation.createProduct),
     productController.createProduct
   );
@@ -60,6 +60,9 @@ module.exports = router;
  *               category:
  *                 type: string
  *                 example: "Fruits"
+ *               description:
+ *                 type: string
+ *                 example: "Updated description"
  *               subcategory:  # Fixed "Subcategory" key (lowercase 's')
  *                 type: string
  *                 example: "Citrus"
@@ -99,20 +102,6 @@ module.exports = router;
 /**
  * @swagger
  * /products/{productId}:
- *   get:
- *     summary: Get a product by ID
- *     tags: [Product]
- *     parameters:
- *       - name: productId
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       200:
- *         description: Successfully retrieved the product
- *       404:
- *         description: Product not found
  *   put:
  *     summary: Update a product
  *     tags: [Product]
@@ -127,46 +116,41 @@ module.exports = router;
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
  *               name:
  *                 type: string
+ *                 example: "Apple"
  *               category:
  *                 type: string
- *               subcategory:  # Fixed "Subcategory" key (lowercase 's')
+ *                 example: "Fruits"
+ *               subcategory:
  *                 type: string
+ *                 example: "Citrus"
+ *               description:
+ *                 type: string
+ *                 example: "Updated description"
  *               price:
  *                 type: number
+ *                 example: 2.99
  *               unit:
  *                 type: string
  *                 enum: [kg, dozen, piece]
+ *                 example: "kg"
  *               stock:
  *                 type: number
+ *                 example: 150
  *               image:
  *                 type: string
+ *                 format: binary
+ *                 description: Optional image file
  *     responses:
  *       200:
  *         description: Product updated successfully
  *       400:
  *         description: Bad request
- *       404:
- *         description: Product not found
- *   delete:
- *     summary: Delete a product
- *     tags: [Product]
- *     security:
- *       - bearerAuth: []
- *     parameters:
- *       - name: productId
- *         in: path
- *         required: true
- *         schema:
- *           type: string
- *     responses:
- *       204:
- *         description: Product deleted successfully
  *       404:
  *         description: Product not found
  */

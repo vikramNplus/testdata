@@ -15,7 +15,7 @@ const subcategorySchema = new mongoose.Schema(
       },
     image: {
       type: String, // Image URL
-      required: true,
+      required: false,
     },
     isActive: {
       type: Boolean,

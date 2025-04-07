@@ -63,7 +63,7 @@ module.exports = router;
  *                 example: "Electronics"
  *               category:
  *                 type: string
- *                 example: "60a7af5b2f8fb814b56fa181"
+ *                 example: "vegtable"
  *               image:
  *                 type: string
  *                 format: binary
@@ -130,7 +130,7 @@ module.exports = router;
  *                 example: "Laptops"
  *               category:
  *                 type: string
- *                 example: "60a7af5b2f8fb814b56fa181"
+ *                 example: "vegtable"
  *               image:
  *                 type: string
  *                 format: binary
@@ -179,7 +179,7 @@ module.exports = router;
  *           example: "Gaming Laptops"
  *         category:
  *           type: string
- *           example: "60a7af5b2f8fb814b56fa181"
+ *           example: "vegtable"
  *         image:
  *           type: string
  *           example: "/uploads/1743529911764-subcategory.jpg"

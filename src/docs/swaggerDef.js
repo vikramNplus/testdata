@@ -6,11 +6,27 @@ const swaggerDef = {
   info: {
     title: 'node-express',
     version,
-  
+  },
+  security: [
+    {
+      BearerAuth: [],
+    },
+  ],
+  components: {
+    securitySchemes: {
+      BearerAuth: {
+        type: 'http',
+        scheme: 'bearer',
+        bearerFormat: 'JWT',
+      },
+    },
   },
   servers: [
     {
-      url: `https://testdata-x7qx.onrender.com/v1`,
+      url: 'https://testdata-x7qx.onrender.com/v1',
+    },
+    {
+      url: 'http://localhost:1234/v1',
     },
   ],
 };
