@@ -41,4 +41,7 @@ const productSchema = mongoose.Schema({
 productSchema.plugin(toJSON);
 productSchema.plugin(paginate);
 
-module.exports = mongoose.model('Product', productSchema);
+
+const Product = mongoose.model('Product', productSchema);
+
+module.exports = { Product };

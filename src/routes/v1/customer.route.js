@@ -271,25 +271,77 @@ module.exports = router;
 
 /**
  * @swagger
- * /customer/orders:
- *   post:
- *     summary: Place a new order
- *     tags: [Customer]
- *     security:
- *       - bearerAuth: []
- *     requestBody:
- *       required: true
- *       content:
- *         application/json:
- *           schema:
- *             $ref: '#/components/schemas/PlaceOrder'
- *     responses:
- *       201:
- *         description: Order placed successfully
- *       400:
- *         description: Invalid order data
- *       401:
- *         description: Unauthorized
+ * components:
+ *   schemas:
+ *     OrderItem:
+ *       type: object
+ *       properties:
+ *         productId:
+ *           type: string
+ *           description: ID of the product
+ *           example: '67f159a9904b1efd70b43eda'
+ *         quantity:
+ *           type: integer
+ *           description: Quantity of the product
+ *           example: 2
+ *     OrderRequest:
+ *       type: object
+ *       properties:
+ *         customer:
+ *           type: string
+ *           description: Customer ID placing the order
+ *           example: '67eabd2b1deea94013d11ea6'
+ *         items:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/OrderItem'
+ *           description: List of items in the order
+ *         totalPrice:
+ *           type: number
+ *           format: float
+ *           description: Total price of the order
+ *           example: 100.0
+ *         status:
+ *           type: string
+ *           description: Status of the order
+ *           example: 'placed'
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: Timestamp of when the order was created
+ *           example: '2025-04-08T15:21:29.271Z'
+ *     OrderResponse:
+ *       type: object
+ *       properties:
+ *         message:
+ *           type: string
+ *           example: 'Order placed successfully'
+ *         orderId:
+ *           type: string
+ *           example: '67f53ef9654686787c0506e2'
+ * 
+ * paths:
+ *   /v1/customer/orders:
+ *     post:
+ *       summary: Place an order
+ *       description: This endpoint allows a customer to place an order.
+ *       requestBody:
+ *         required: true
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/OrderRequest'
+ *       responses:
+ *         '201':
+ *           description: Order placed successfully
+ *           content:
+ *             application/json:
+ *               schema:
+ *                 $ref: '#/components/schemas/OrderResponse'
+ *         '400':
+ *           description: Bad request - validation error or invalid data
+ *         '500':
+ *           description: Internal server error
  */
 
 /**
@@ -392,4 +444,3 @@ module.exports = router;
  *       404:
  *         description: Order not found
  */
-    

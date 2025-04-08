@@ -1,5 +1,5 @@
+// order.model.js
 const mongoose = require('mongoose');
-const { toJSON, paginate } = require('./plugins');
 
 const orderSchema = mongoose.Schema(
   {
@@ -10,9 +10,9 @@ const orderSchema = mongoose.Schema(
     },
     items: [
       {
-        product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Product',
+        productId: {
+          type: mongoose.Schema.Types.ObjectId, // Reference to the Product model
+          ref: 'Product', // Make sure it refers to the 'Product' model
           required: true,
         },
         quantity: {
@@ -35,8 +35,6 @@ const orderSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-orderSchema.plugin(toJSON);
-orderSchema.plugin(paginate);
-
 const Order = mongoose.model('Order', orderSchema);
-module.exports = {Order};
+
+module.exports = { Order };

@@ -27,7 +27,6 @@ const addToCart = {
 
 const placeOrder = {
   body: Joi.object().keys({
-    addressId: Joi.string().trim().hex().length(24).required(),
     items: Joi.array()
       .items(
         Joi.object().keys({

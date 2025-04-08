@@ -1,5 +1,7 @@
 
-const { Customer, Address, Product, Cart, Order } = require('../models');
+const { Customer, Address, Cart } = require('../models');
+const { Order } = require('../models/order.model');
+const { Product } = require('../models/product.model');
 const ApiError = require('../utils/ApiError');
 const httpStatus = require('http-status');
 
@@ -59,7 +61,7 @@ const addToCart = async (customerId, cartItem) => {
 };
 
 const getCustomerCart = async (customerId) => {
-  return Cart.find({ customer: customerId }).populate('product');
+  return Cart.find({ customer: customerId }).populate('productId');
 };
 
 const removeFromCart = async (customerId, cartItemId) => {
@@ -70,25 +72,49 @@ const removeFromCart = async (customerId, cartItemId) => {
   return item;
 };
 
-const placeOrder = async (customerId, { addressId, items }) => {
+const placeOrder = async (customerId, { items }) => {
+  // Fetch the products from the database using 'productId'
+  const products = await Product.find({ _id: { $in: items.map(item => item.productId) } });
+
+  // Calculate the total price
+  const totalPrice = items.reduce((total, item) => {
+    console.log('Item:', item, total);
+
+    // Find the product from the database
+    const product = products.find(p => p._id.toString() === item.productId.toString()); 
+
+    if (product) {
+      // If product found, calculate price
+      return total + (product.price * item.quantity); 
+    }
+    return total;
+  }, 0);
+
+  console.log('Total Price:', totalPrice);
+
+  // Create a new order
   const order = new Order({
     customer: customerId,
-    address: addressId,
-    items,
-    status: 'Placed',
-    createdAt: new Date()
+    items,  // You can directly use items as the 'productId' is already included
+    totalPrice,
+    status: 'placed',
+    createdAt: new Date(),
   });
+
   await order.save();
-  await Cart.deleteMany({ customer: customerId }); // Clear cart after placing order
+
+  // Clear the cart after placing the order
+  await Cart.deleteMany({ customer: customerId });
+
   return order;
 };
 
 const getCustomerOrders = async (customerId) => {
-  return Order.find({ customer: customerId }).populate('items.product').sort({ createdAt: -1 });
+  return Order.find({ customer: customerId }).populate('items.productId').sort({ createdAt: -1 });
 };
 
 const getOrderDetails = async (customerId, orderId) => {
-  const order = await Order.findOne({ _id: orderId, customer: customerId }).populate('items.product');
+  const order = await Order.findOne({ _id: orderId, customer: customerId }).populate('items.productId');
   if (!order) {
     throw new ApiError(httpStatus.NOT_FOUND, 'Order not found');
   }
