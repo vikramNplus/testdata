@@ -1,7 +1,7 @@
 const httpStatus = require('http-status');
 const { User,Users, Role, Request } = require('../models');
 const ApiError = require('../utils/ApiError');
-const { autocompletePlaces, getPrimaryZone } = require('../utils/commonFunction');
+const {  getPrimaryZone } = require('../utils/commonFunction');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
 const ObjectId = require('mongoose').Types.ObjectId
@@ -287,13 +287,7 @@ const deleteUserById = async (userId) => {
 };
 
 
-const fetchAutocompletePlaces = async (keyword, location) => {
-  try {
-    return await autocompletePlaces(keyword, location);
-  } catch (error) {
-    throw new Error(error.message);
-  }
-};
+
 
 const getPrimaryZoneDetail = async (lat, lon) => {
   try {
@@ -569,7 +563,6 @@ module.exports = {
   gettUserByEmaiDetails,
   getUserByPhone,
   getDriverByPhone,
-  fetchAutocompletePlaces,
   getRequesHistoryList,
   getPrimaryZoneDetail
 };
