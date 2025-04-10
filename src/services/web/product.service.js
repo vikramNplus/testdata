@@ -1,6 +1,6 @@
 // src/services/product.service.js
 const httpStatus = require('http-status');
-const { Product } = require('../../models');
+const { Product } = require('../../models/product.model');
 const ApiError = require('../../utils/ApiError');
 
 // Create a new product
